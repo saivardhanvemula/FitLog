@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FitLog</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            padding: 40px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            background: #2c7be5;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1a5fd0;
+        }
+
+        .log {
+            margin-top: 20px;
+            padding: 10px;
+            background: #f1f1f1;
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .delete {
+            background: red;
+            color: white;
+            border: none;
+            padding: 5px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<h1>💪 FitLog</h1>
+
+<div class="container">
+    <input type="number" id="weight" placeholder="Enter your weight (kg)">
+    <input type="text" id="exercise" placeholder="Enter exercise (e.g. Chest + Triceps)">
+    <button onclick="addLog()">Save Entry</button>
+
+    <div id="logs"></div>
+</div>
+
+<script>
+    let logs = JSON.parse(localStorage.getItem("fitlog")) || [];
+
+    function saveToStorage() {
+        localStorage.setItem("fitlog", JSON.stringify(logs));
+    }
+
+    function renderLogs() {
+        const logsDiv = document.getElementById("logs");
+        logsDiv.innerHTML = "";
+
+        logs.forEach((log, index) => {
+            const div = document.createElement("div");
+            div.className = "log";
+            div.innerHTML = `
+                <div>
+                    <strong>${log.date}</strong><br>
+                    Weight: ${log.weight} kg<br>
+                    Exercise: ${log.exercise}
+                </div>
+                <button class="delete" onclick="deleteLog(${index})">X</button>
+            `;
+            logsDiv.appendChild(div);
+        });
+    }
+
+    function addLog() {
+        const weight = document.getElementById("weight").value;
+        const exercise = document.getElementById("exercise").value;
+
+        if (!weight || !exercise) {
+            alert("Please fill in both fields.");
+            return;
+        }
+
+        const today = new Date().toLocaleDateString();
+
+        logs.push({
+            date: today,
+            weight: weight,
+            exercise: exercise
+        });
+
+        saveToStorage();
+        renderLogs();
+
+        document.getElementById("weight").value = "";
+        document.getElementById("exercise").value = "";
+    }
+
+    function deleteLog(index) {
+        logs.splice(index, 1);
+        saveToStorage();
+        renderLogs();
+    }
+
+    renderLogs();
+</script>
+
+</body>
+</html>

@@ -1,136 +1,521 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>FitLog</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f4f6f8;
-            padding: 40px;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FitLog</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0d0d0f;
+      --surface: #161618;
+      --surface2: #1e1e22;
+      --accent: #c8f135;
+      --accent2: #8bdc00;
+      --text: #f0f0ee;
+      --muted: #6b6b72;
+      --danger: #ff4c4c;
+      --border: #2a2a30;
+    }
 
-        h1 {
-            text-align: center;
-        }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-        .container {
-            max-width: 500px;
-            margin: auto;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+      padding: 40px 20px 80px;
+    }
 
-        input, button {
-            width: 100%;
-            padding: 10px;
-            margin-top: 10px;
-            border-radius: 6px;
-            border: 1px solid #ccc;
-        }
+    /* Background grid */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(200,241,53,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(200,241,53,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
 
-        button {
-            background: #2c7be5;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
+    .wrapper {
+      position: relative;
+      z-index: 1;
+      max-width: 680px;
+      margin: 0 auto;
+    }
 
-        button:hover {
-            background: #1a5fd0;
-        }
+    /* Header */
+    header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 40px;
+    }
 
-        .log {
-            margin-top: 20px;
-            padding: 10px;
-            background: #f1f1f1;
-            border-radius: 6px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+    .logo-icon {
+      width: 52px;
+      height: 52px;
+      background: var(--accent);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      flex-shrink: 0;
+      box-shadow: 0 0 24px rgba(200,241,53,0.35);
+    }
 
-        .delete {
-            background: red;
-            color: white;
-            border: none;
-            padding: 5px 8px;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-    </style>
+    header h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 52px;
+      letter-spacing: 3px;
+      color: var(--text);
+      line-height: 1;
+    }
+
+    header p {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 2px;
+      letter-spacing: 0.5px;
+    }
+
+    /* Card */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 28px;
+      margin-bottom: 28px;
+    }
+
+    .card-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 20px;
+      letter-spacing: 2px;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+
+    /* Form */
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 12px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    label {
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    input {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      padding: 12px 14px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    input::placeholder { color: var(--muted); }
+
+    input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(200,241,53,0.1);
+    }
+
+    /* Remove number input spinners */
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; }
+
+    .btn-save {
+      margin-top: 16px;
+      width: 100%;
+      padding: 14px;
+      background: var(--accent);
+      color: #0d0d0f;
+      border: none;
+      border-radius: 12px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 20px;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+      box-shadow: 0 4px 20px rgba(200,241,53,0.2);
+    }
+
+    .btn-save:hover {
+      background: var(--accent2);
+      box-shadow: 0 6px 28px rgba(200,241,53,0.35);
+    }
+    .btn-save:active { transform: scale(0.98); }
+
+    /* Stats bar */
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    .stat {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px 16px;
+      text-align: center;
+    }
+
+    .stat-value {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 32px;
+      color: var(--accent);
+      letter-spacing: 1px;
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* Table */
+    .table-header {
+      display: grid;
+      grid-template-columns: 120px 90px 1fr 44px;
+      gap: 12px;
+      padding: 0 16px 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .table-header span {
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .log-list { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
+
+    .log-row {
+      display: grid;
+      grid-template-columns: 120px 90px 1fr 44px;
+      gap: 12px;
+      align-items: center;
+      background: var(--surface2);
+      border: 1px solid transparent;
+      border-radius: 12px;
+      padding: 14px 16px;
+      transition: border-color 0.2s, background 0.2s;
+      animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(-8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .log-row:hover {
+      border-color: var(--border);
+      background: #232328;
+    }
+
+    .log-date {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .log-weight {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22px;
+      color: var(--accent);
+      letter-spacing: 1px;
+    }
+
+    .log-weight span {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 400;
+    }
+
+    .log-exercise {
+      font-size: 14px;
+      color: var(--text);
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(200,241,53,0.1);
+      color: var(--accent);
+      border-radius: 20px;
+      padding: 3px 10px;
+      font-size: 12px;
+      font-weight: 600;
+      border: 1px solid rgba(200,241,53,0.15);
+    }
+
+    .btn-delete {
+      width: 32px;
+      height: 32px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--muted);
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+      flex-shrink: 0;
+    }
+
+    .btn-delete:hover {
+      background: rgba(255,76,76,0.12);
+      color: var(--danger);
+      border-color: rgba(255,76,76,0.3);
+    }
+
+    /* Empty state */
+    .empty {
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .empty-icon {
+      font-size: 40px;
+      margin-bottom: 12px;
+      opacity: 0.4;
+    }
+
+    .empty p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: var(--accent);
+      color: #0d0d0f;
+      padding: 12px 24px;
+      border-radius: 100px;
+      font-weight: 600;
+      font-size: 14px;
+      letter-spacing: 0.3px;
+      transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s;
+      opacity: 0;
+      z-index: 100;
+      white-space: nowrap;
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    @media (max-width: 480px) {
+      .form-row { grid-template-columns: 1fr; }
+      .table-header,
+      .log-row { grid-template-columns: 90px 70px 1fr 36px; gap: 8px; }
+      header h1 { font-size: 38px; }
+      .stats-bar { grid-template-columns: repeat(3, 1fr); }
+      .stat-value { font-size: 24px; }
+    }
+  </style>
 </head>
 <body>
 
-<h1>💪 FitLog</h1>
+<div class="wrapper">
+  <header>
+    <div class="logo-icon">💪</div>
+    <div>
+      <h1>FITLOG</h1>
+      <p>Track your workouts & progress</p>
+    </div>
+  </header>
 
-<div class="container">
-    <input type="number" id="weight" placeholder="Enter your weight (kg)">
-    <input type="text" id="exercise" placeholder="Enter exercise (e.g. Chest + Triceps)">
-    <button onclick="addLog()">Save Entry</button>
+  <!-- Stats -->
+  <div class="stats-bar" id="statsBar">
+    <div class="stat">
+      <div class="stat-value" id="statEntries">0</div>
+      <div class="stat-label">Sessions</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value" id="statWeight">—</div>
+      <div class="stat-label">Latest kg</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value" id="statStreak">0</div>
+      <div class="stat-label">This Week</div>
+    </div>
+  </div>
 
-    <div id="logs"></div>
+  <!-- Input Card -->
+  <div class="card">
+    <div class="card-title">New Entry</div>
+    <div class="form-row">
+      <div class="field">
+        <label for="weight">Weight (kg)</label>
+        <input type="number" id="weight" placeholder="e.g. 78.5" step="0.1" />
+      </div>
+      <div class="field">
+        <label for="exercise">Exercise</label>
+        <input type="text" id="exercise" placeholder="e.g. Chest + Triceps" />
+      </div>
+    </div>
+    <button class="btn-save" onclick="addLog()">SAVE ENTRY</button>
+  </div>
+
+  <!-- Log Table Card -->
+  <div class="card">
+    <div class="card-title">Training History</div>
+
+    <div class="table-header" id="tableHeader" style="display:none">
+      <span>Date</span>
+      <span>Weight</span>
+      <span>Exercise</span>
+      <span></span>
+    </div>
+
+    <div class="log-list" id="logList"></div>
+  </div>
 </div>
 
+<div class="toast" id="toast"></div>
+
 <script>
-    let logs = JSON.parse(localStorage.getItem("fitlog")) || [];
+  let logs = JSON.parse(localStorage.getItem("fitlog")) || [];
 
-    function saveToStorage() {
-        localStorage.setItem("fitlog", JSON.stringify(logs));
+  function saveToStorage() {
+    localStorage.setItem("fitlog", JSON.stringify(logs));
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById("toast");
+    t.textContent = msg;
+    t.classList.add("show");
+    setTimeout(() => t.classList.remove("show"), 2200);
+  }
+
+  function updateStats() {
+    document.getElementById("statEntries").textContent = logs.length;
+    if (logs.length > 0) {
+      document.getElementById("statWeight").textContent = logs[logs.length - 1].weight;
+    } else {
+      document.getElementById("statWeight").textContent = "—";
     }
 
-    function renderLogs() {
-        const logsDiv = document.getElementById("logs");
-        logsDiv.innerHTML = "";
+    // Count unique days this week
+    const now = new Date();
+    const weekStart = new Date(now);
+    weekStart.setDate(now.getDate() - now.getDay());
+    weekStart.setHours(0,0,0,0);
 
-        logs.forEach((log, index) => {
-            const div = document.createElement("div");
-            div.className = "log";
-            div.innerHTML = `
-                <div>
-                    <strong>${log.date}</strong><br>
-                    Weight: ${log.weight} kg<br>
-                    Exercise: ${log.exercise}
-                </div>
-                <button class="delete" onclick="deleteLog(${index})">X</button>
-            `;
-            logsDiv.appendChild(div);
-        });
+    const thisWeekDays = new Set(
+      logs.filter(l => {
+        const d = new Date(l.timestamp || 0);
+        return d >= weekStart;
+      }).map(l => new Date(l.timestamp || 0).toDateString())
+    );
+    document.getElementById("statStreak").textContent = thisWeekDays.size;
+  }
+
+  function renderLogs() {
+    const list = document.getElementById("logList");
+    const header = document.getElementById("tableHeader");
+    list.innerHTML = "";
+
+    if (logs.length === 0) {
+      header.style.display = "none";
+      list.innerHTML = `
+        <div class="empty">
+          <div class="empty-icon">🏋️</div>
+          <p>No entries yet. Log your first session!</p>
+        </div>`;
+    } else {
+      header.style.display = "grid";
+      [...logs].reverse().forEach((log, revIndex) => {
+        const index = logs.length - 1 - revIndex;
+        const row = document.createElement("div");
+        row.className = "log-row";
+        row.innerHTML = `
+          <div class="log-date">${log.date}</div>
+          <div class="log-weight">${log.weight}<span> kg</span></div>
+          <div class="log-exercise"><span class="badge">${log.exercise}</span></div>
+          <button class="btn-delete" onclick="deleteLog(${index})" title="Delete">✕</button>
+        `;
+        list.appendChild(row);
+      });
     }
 
-    function addLog() {
-        const weight = document.getElementById("weight").value;
-        const exercise = document.getElementById("exercise").value;
+    updateStats();
+  }
 
-        if (!weight || !exercise) {
-            alert("Please fill in both fields.");
-            return;
-        }
+  function addLog() {
+    const weight = document.getElementById("weight").value.trim();
+    const exercise = document.getElementById("exercise").value.trim();
 
-        const today = new Date().toLocaleDateString();
-
-        logs.push({
-            date: today,
-            weight: weight,
-            exercise: exercise
-        });
-
-        saveToStorage();
-        renderLogs();
-
-        document.getElementById("weight").value = "";
-        document.getElementById("exercise").value = "";
+    if (!weight || !exercise) {
+      showToast("⚠️ Fill in both fields");
+      return;
     }
 
-    function deleteLog(index) {
-        logs.splice(index, 1);
-        saveToStorage();
-        renderLogs();
-    }
+    const today = new Date().toLocaleDateString('en-GB', {
+      day: '2-digit', month: 'short', year: 'numeric'
+    });
 
+    logs.push({ date: today, weight: parseFloat(weight), exercise, timestamp: Date.now() });
+    saveToStorage();
     renderLogs();
-</script>
 
+    document.getElementById("weight").value = "";
+    document.getElementById("exercise").value = "";
+    showToast("✓ Entry saved!");
+  }
+
+  function deleteLog(index) {
+    logs.splice(index, 1);
+    saveToStorage();
+    renderLogs();
+    showToast("Entry removed");
+  }
+
+  // Enter key support
+  document.addEventListener("keydown", e => {
+    if (e.key === "Enter") addLog();
+  });
+
+  renderLogs();
+</script>
 </body>
 </html>

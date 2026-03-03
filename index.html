@@ -28,7 +28,6 @@
       padding: 40px 20px 80px;
     }
 
-    /* Background grid */
     body::before {
       content: '';
       position: fixed;
@@ -48,7 +47,6 @@
       margin: 0 auto;
     }
 
-    /* Header */
     header {
       display: flex;
       align-items: center;
@@ -57,34 +55,22 @@
     }
 
     .logo-icon {
-      width: 52px;
-      height: 52px;
+      width: 52px; height: 52px;
       background: var(--accent);
       border-radius: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 26px;
-      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 26px; flex-shrink: 0;
       box-shadow: 0 0 24px rgba(200,241,53,0.35);
     }
 
     header h1 {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 52px;
-      letter-spacing: 3px;
-      color: var(--text);
-      line-height: 1;
+      font-size: 52px; letter-spacing: 3px;
+      color: var(--text); line-height: 1;
     }
 
-    header p {
-      font-size: 13px;
-      color: var(--muted);
-      margin-top: 2px;
-      letter-spacing: 0.5px;
-    }
+    header p { font-size: 13px; color: var(--muted); margin-top: 2px; letter-spacing: 0.5px; }
 
-    /* Card */
     .card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -95,34 +81,18 @@
 
     .card-title {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 20px;
-      letter-spacing: 2px;
-      color: var(--muted);
-      margin-bottom: 20px;
+      font-size: 20px; letter-spacing: 2px;
+      color: var(--muted); margin-bottom: 20px;
     }
 
-    /* Form */
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 2fr;
-      gap: 12px;
-    }
-
-    .field {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
+    .field { display: flex; flex-direction: column; gap: 6px; }
 
     label {
-      font-size: 11px;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: var(--muted);
-      font-weight: 600;
+      font-size: 11px; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--muted); font-weight: 600;
     }
 
-    input {
+    input[type=number] {
       background: var(--surface2);
       border: 1px solid var(--border);
       border-radius: 10px;
@@ -132,21 +102,88 @@
       padding: 12px 14px;
       outline: none;
       transition: border-color 0.2s, box-shadow 0.2s;
+      width: 100%;
     }
 
-    input::placeholder { color: var(--muted); }
-
-    input:focus {
+    input[type=number]::placeholder { color: var(--muted); }
+    input[type=number]:focus {
       border-color: var(--accent);
       box-shadow: 0 0 0 3px rgba(200,241,53,0.1);
     }
-
-    /* Remove number input spinners */
     input[type=number]::-webkit-inner-spin-button,
     input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; }
 
+    /* Muscle selector */
+    .muscle-label {
+      font-size: 11px; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--muted);
+      font-weight: 600; margin-bottom: 10px;
+      display: block;
+    }
+
+    .muscle-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .muscle-chip {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 14px;
+      border-radius: 100px;
+      border: 1.5px solid var(--border);
+      background: var(--surface2);
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      user-select: none;
+    }
+
+    .muscle-chip .chip-icon { font-size: 15px; }
+
+    .muscle-chip:hover {
+      border-color: rgba(200,241,53,0.4);
+      color: var(--text);
+    }
+
+    .muscle-chip.selected {
+      border-color: var(--accent);
+      background: rgba(200,241,53,0.1);
+      color: var(--accent);
+      box-shadow: 0 0 10px rgba(200,241,53,0.12);
+    }
+
+    .muscle-chip.selected .chip-icon {
+      filter: none;
+    }
+
+    .selection-hint {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 10px;
+      min-height: 18px;
+      transition: color 0.2s;
+    }
+
+    .selection-hint.has-selection { color: var(--accent); }
+
+    .form-top {
+      margin-bottom: 20px;
+      max-width: 200px;
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 20px 0;
+    }
+
     .btn-save {
-      margin-top: 16px;
+      margin-top: 20px;
       width: 100%;
       padding: 14px;
       background: var(--accent);
@@ -154,20 +191,16 @@
       border: none;
       border-radius: 12px;
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 20px;
-      letter-spacing: 2px;
+      font-size: 20px; letter-spacing: 2px;
       cursor: pointer;
       transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
       box-shadow: 0 4px 20px rgba(200,241,53,0.2);
     }
 
-    .btn-save:hover {
-      background: var(--accent2);
-      box-shadow: 0 6px 28px rgba(200,241,53,0.35);
-    }
+    .btn-save:hover { background: var(--accent2); box-shadow: 0 6px 28px rgba(200,241,53,0.35); }
     .btn-save:active { transform: scale(0.98); }
 
-    /* Stats bar */
+    /* Stats */
     .stats-bar {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -185,48 +218,40 @@
 
     .stat-value {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 32px;
-      color: var(--accent);
-      letter-spacing: 1px;
-      line-height: 1;
+      font-size: 32px; color: var(--accent);
+      letter-spacing: 1px; line-height: 1;
     }
 
     .stat-label {
-      font-size: 11px;
-      letter-spacing: 1.2px;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-top: 4px;
+      font-size: 11px; letter-spacing: 1.2px;
+      text-transform: uppercase; color: var(--muted); margin-top: 4px;
     }
 
     /* Table */
     .table-header {
       display: grid;
-      grid-template-columns: 120px 90px 1fr 44px;
+      grid-template-columns: 110px 80px 1fr 36px;
       gap: 12px;
-      padding: 0 16px 10px;
+      padding: 0 14px 10px;
       border-bottom: 1px solid var(--border);
     }
 
     .table-header span {
-      font-size: 10px;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: var(--muted);
-      font-weight: 600;
+      font-size: 10px; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--muted); font-weight: 600;
     }
 
     .log-list { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
 
     .log-row {
       display: grid;
-      grid-template-columns: 120px 90px 1fr 44px;
+      grid-template-columns: 110px 80px 1fr 36px;
       gap: 12px;
       align-items: center;
       background: var(--surface2);
       border: 1px solid transparent;
       border-radius: 12px;
-      padding: 14px 16px;
+      padding: 12px 14px;
       transition: border-color 0.2s, background 0.2s;
       animation: slideIn 0.3s ease;
     }
@@ -236,62 +261,48 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    .log-row:hover {
-      border-color: var(--border);
-      background: #232328;
-    }
+    .log-row:hover { border-color: var(--border); background: #232328; }
 
-    .log-date {
-      font-size: 13px;
-      color: var(--muted);
-    }
+    .log-date { font-size: 13px; color: var(--muted); }
 
     .log-weight {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 22px;
-      color: var(--accent);
-      letter-spacing: 1px;
+      font-size: 22px; color: var(--accent); letter-spacing: 1px;
     }
-
     .log-weight span {
       font-family: 'DM Sans', sans-serif;
-      font-size: 12px;
-      color: var(--muted);
-      font-weight: 400;
+      font-size: 12px; color: var(--muted); font-weight: 400;
     }
 
-    .log-exercise {
-      font-size: 14px;
-      color: var(--text);
-      font-weight: 500;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+    .log-muscles {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
     }
 
-    .badge {
-      display: inline-block;
-      background: rgba(200,241,53,0.1);
+    .mini-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      background: rgba(200,241,53,0.08);
       color: var(--accent);
       border-radius: 20px;
-      padding: 3px 10px;
-      font-size: 12px;
+      padding: 2px 8px;
+      font-size: 11px;
       font-weight: 600;
       border: 1px solid rgba(200,241,53,0.15);
+      white-space: nowrap;
     }
 
     .btn-delete {
-      width: 32px;
-      height: 32px;
+      width: 32px; height: 32px;
       background: transparent;
       border: 1px solid var(--border);
       border-radius: 8px;
       color: var(--muted);
-      font-size: 14px;
+      font-size: 13px;
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       transition: background 0.2s, color 0.2s, border-color 0.2s;
       flex-shrink: 0;
     }
@@ -302,54 +313,27 @@
       border-color: rgba(255,76,76,0.3);
     }
 
-    /* Empty state */
-    .empty {
-      text-align: center;
-      padding: 40px 20px;
-    }
+    .empty { text-align: center; padding: 40px 20px; }
+    .empty-icon { font-size: 40px; margin-bottom: 12px; opacity: 0.4; }
+    .empty p { color: var(--muted); font-size: 14px; }
 
-    .empty-icon {
-      font-size: 40px;
-      margin-bottom: 12px;
-      opacity: 0.4;
-    }
-
-    .empty p {
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    /* Toast */
     .toast {
       position: fixed;
-      bottom: 30px;
-      left: 50%;
+      bottom: 30px; left: 50%;
       transform: translateX(-50%) translateY(80px);
-      background: var(--accent);
-      color: #0d0d0f;
-      padding: 12px 24px;
-      border-radius: 100px;
-      font-weight: 600;
-      font-size: 14px;
-      letter-spacing: 0.3px;
+      background: var(--accent); color: #0d0d0f;
+      padding: 12px 24px; border-radius: 100px;
+      font-weight: 600; font-size: 14px; letter-spacing: 0.3px;
       transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s;
-      opacity: 0;
-      z-index: 100;
-      white-space: nowrap;
+      opacity: 0; z-index: 100; white-space: nowrap;
     }
-
-    .toast.show {
-      transform: translateX(-50%) translateY(0);
-      opacity: 1;
-    }
+    .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
 
     @media (max-width: 480px) {
-      .form-row { grid-template-columns: 1fr; }
-      .table-header,
-      .log-row { grid-template-columns: 90px 70px 1fr 36px; gap: 8px; }
       header h1 { font-size: 38px; }
-      .stats-bar { grid-template-columns: repeat(3, 1fr); }
+      .stats-bar { grid-template-columns: repeat(3,1fr); }
       .stat-value { font-size: 24px; }
+      .table-header, .log-row { grid-template-columns: 90px 64px 1fr 32px; gap: 8px; }
     }
   </style>
 </head>
@@ -364,8 +348,7 @@
     </div>
   </header>
 
-  <!-- Stats -->
-  <div class="stats-bar" id="statsBar">
+  <div class="stats-bar">
     <div class="stat">
       <div class="stat-value" id="statEntries">0</div>
       <div class="stat-label">Sessions</div>
@@ -380,33 +363,33 @@
     </div>
   </div>
 
-  <!-- Input Card -->
   <div class="card">
     <div class="card-title">New Entry</div>
-    <div class="form-row">
+
+    <div class="form-top">
       <div class="field">
-        <label for="weight">Weight (kg)</label>
+        <label for="weight">Body Weight (kg)</label>
         <input type="number" id="weight" placeholder="e.g. 78.5" step="0.1" />
       </div>
-      <div class="field">
-        <label for="exercise">Exercise</label>
-        <input type="text" id="exercise" placeholder="e.g. Chest + Triceps" />
-      </div>
     </div>
+
+    <div class="divider"></div>
+
+    <span class="muscle-label">Muscles Trained</span>
+    <div class="muscle-grid" id="muscleGrid"></div>
+    <div class="selection-hint" id="selectionHint">Select at least one muscle group</div>
+
     <button class="btn-save" onclick="addLog()">SAVE ENTRY</button>
   </div>
 
-  <!-- Log Table Card -->
   <div class="card">
     <div class="card-title">Training History</div>
-
     <div class="table-header" id="tableHeader" style="display:none">
       <span>Date</span>
       <span>Weight</span>
-      <span>Exercise</span>
+      <span>Muscles</span>
       <span></span>
     </div>
-
     <div class="log-list" id="logList"></div>
   </div>
 </div>
@@ -414,7 +397,59 @@
 <div class="toast" id="toast"></div>
 
 <script>
+  const MUSCLES = [
+    { id: 'chest',    label: 'Chest',    icon: '🫁' },
+    { id: 'back',     label: 'Back',     icon: '🔙' },
+    { id: 'shoulders',label: 'Shoulders',icon: '🏈' },
+    { id: 'biceps',   label: 'Biceps',   icon: '💪' },
+    { id: 'triceps',  label: 'Triceps',  icon: '🦾' },
+    { id: 'legs',     label: 'Legs',     icon: '🦵' },
+    { id: 'forearms', label: 'Forearms', icon: '🤜' },
+    { id: 'abs',      label: 'Abs',      icon: '⚡' },
+  ];
+
+  let selected = new Set();
   let logs = JSON.parse(localStorage.getItem("fitlog")) || [];
+
+  // Build chips
+  const grid = document.getElementById("muscleGrid");
+  MUSCLES.forEach(m => {
+    const chip = document.createElement("div");
+    chip.className = "muscle-chip";
+    chip.dataset.id = m.id;
+    chip.innerHTML = `<span class="chip-icon">${m.icon}</span>${m.label}`;
+    chip.addEventListener("click", () => toggleMuscle(m.id, chip));
+    grid.appendChild(chip);
+  });
+
+  function toggleMuscle(id, el) {
+    if (selected.has(id)) {
+      selected.delete(id);
+      el.classList.remove("selected");
+    } else {
+      selected.add(id);
+      el.classList.add("selected");
+    }
+    updateHint();
+  }
+
+  function updateHint() {
+    const hint = document.getElementById("selectionHint");
+    if (selected.size === 0) {
+      hint.textContent = "Select at least one muscle group";
+      hint.classList.remove("has-selection");
+    } else {
+      const names = [...selected].map(id => MUSCLES.find(m => m.id === id).label);
+      hint.textContent = `✓ ${names.join(", ")}`;
+      hint.classList.add("has-selection");
+    }
+  }
+
+  function clearChips() {
+    selected.clear();
+    document.querySelectorAll(".muscle-chip").forEach(c => c.classList.remove("selected"));
+    updateHint();
+  }
 
   function saveToStorage() {
     localStorage.setItem("fitlog", JSON.stringify(logs));
@@ -429,25 +464,19 @@
 
   function updateStats() {
     document.getElementById("statEntries").textContent = logs.length;
-    if (logs.length > 0) {
-      document.getElementById("statWeight").textContent = logs[logs.length - 1].weight;
-    } else {
-      document.getElementById("statWeight").textContent = "—";
-    }
+    document.getElementById("statWeight").textContent =
+      logs.length > 0 ? logs[logs.length - 1].weight : "—";
 
-    // Count unique days this week
     const now = new Date();
     const weekStart = new Date(now);
     weekStart.setDate(now.getDate() - now.getDay());
     weekStart.setHours(0,0,0,0);
 
-    const thisWeekDays = new Set(
-      logs.filter(l => {
-        const d = new Date(l.timestamp || 0);
-        return d >= weekStart;
-      }).map(l => new Date(l.timestamp || 0).toDateString())
+    const days = new Set(
+      logs.filter(l => new Date(l.timestamp || 0) >= weekStart)
+          .map(l => new Date(l.timestamp || 0).toDateString())
     );
-    document.getElementById("statStreak").textContent = thisWeekDays.size;
+    document.getElementById("statStreak").textContent = days.size;
   }
 
   function renderLogs() {
@@ -464,42 +493,47 @@
         </div>`;
     } else {
       header.style.display = "grid";
-      [...logs].reverse().forEach((log, revIndex) => {
-        const index = logs.length - 1 - revIndex;
+      [...logs].reverse().forEach((log, revIdx) => {
+        const idx = logs.length - 1 - revIdx;
+        const muscles = (log.muscles || []).map(id => {
+          const m = MUSCLES.find(x => x.id === id);
+          return m ? `<span class="mini-badge">${m.icon} ${m.label}</span>` : '';
+        }).join("");
+
         const row = document.createElement("div");
         row.className = "log-row";
         row.innerHTML = `
           <div class="log-date">${log.date}</div>
           <div class="log-weight">${log.weight}<span> kg</span></div>
-          <div class="log-exercise"><span class="badge">${log.exercise}</span></div>
-          <button class="btn-delete" onclick="deleteLog(${index})" title="Delete">✕</button>
+          <div class="log-muscles">${muscles}</div>
+          <button class="btn-delete" onclick="deleteLog(${idx})" title="Delete">✕</button>
         `;
         list.appendChild(row);
       });
     }
-
     updateStats();
   }
 
   function addLog() {
     const weight = document.getElementById("weight").value.trim();
-    const exercise = document.getElementById("exercise").value.trim();
-
-    if (!weight || !exercise) {
-      showToast("⚠️ Fill in both fields");
-      return;
-    }
+    if (!weight) { showToast("⚠️ Enter your body weight"); return; }
+    if (selected.size === 0) { showToast("⚠️ Select at least one muscle"); return; }
 
     const today = new Date().toLocaleDateString('en-GB', {
       day: '2-digit', month: 'short', year: 'numeric'
     });
 
-    logs.push({ date: today, weight: parseFloat(weight), exercise, timestamp: Date.now() });
+    logs.push({
+      date: today,
+      weight: parseFloat(weight),
+      muscles: [...selected],
+      timestamp: Date.now()
+    });
+
     saveToStorage();
     renderLogs();
-
     document.getElementById("weight").value = "";
-    document.getElementById("exercise").value = "";
+    clearChips();
     showToast("✓ Entry saved!");
   }
 
@@ -510,10 +544,7 @@
     showToast("Entry removed");
   }
 
-  // Enter key support
-  document.addEventListener("keydown", e => {
-    if (e.key === "Enter") addLog();
-  });
+  document.addEventListener("keydown", e => { if (e.key === "Enter") addLog(); });
 
   renderLogs();
 </script>
